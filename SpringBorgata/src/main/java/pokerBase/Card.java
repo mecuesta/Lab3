@@ -14,10 +14,10 @@ public final class Card {
 	private eRank Rank;
 	@XmlElement
 	private boolean Wild = false;
-	@XmlElement
+	@XmlElement 
 	private String CardImg;
 	
-	
+	 
 	/**
 	 * Keep the no-arg constructor private.  I don't want 'Card' created without attributes.
 	 */
