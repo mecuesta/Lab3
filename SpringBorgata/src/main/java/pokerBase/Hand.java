@@ -105,14 +105,7 @@ public class Hand {
 		return Ace;
 	}
 
-	public static Hand EvalHand(ArrayList<Card> SeededHand) {
 
-		Deck d = new Deck();
-		Hand h = new Hand(d);
-		h.CardsInHand = SeededHand;
-
-		return h;
-	}
 
 	private static ArrayList<Hand> ExplodeHands(Hand h) {
 		ArrayList<Hand> HandsToReturn = new ArrayList<Hand>();
@@ -164,7 +157,7 @@ public class Hand {
 		return SubHands;
 	}
 
-	public static Hand EvalHands(Hand h) {
+	public static Hand EvalHand(Hand h) {
 		ArrayList<Hand> EvalHands = ExplodeHands(h);
 
 		for (Hand EvalHand : EvalHands) {
@@ -176,7 +169,20 @@ public class Hand {
 		return EvalHands.get(0);
 
 	}
+	
+	public static Hand EvalHand(ArrayList<Hand> hands)
+	{
+		for (Hand EvalHand: hands)
+		{
+			EvalHand.EvalHand();
+		}
+		
+		Collections.sort(hands, Hand.HandRank);
 
+		return hands.get(0);
+		
+	}
+	
 	private void EvalHand() {
 
 		// Evaluates if the hand is a flush and/or straight then figures out
@@ -437,11 +443,6 @@ public class Hand {
 
 			int result = 0;
 
-			result = h2.bNatural - h1.bNatural;
-			if (result != 0)
-			{
-				return result;
-			}
 			result = h2.getHandStrength() - h1.getHandStrength();
 
 			if (result != 0) {
@@ -457,43 +458,97 @@ public class Hand {
 			if (result != 0) {
 				return result;
 			}
-			/*
-			 * if ((h1.Kickers != null) && (h2.Kickers != null)) { if
-			 * (h2.getKicker().get(eCardNo.FirstCard.getCardNo()) != null) { if
-			 * (h1.getKicker().get(eCardNo.FirstCard.getCardNo()) != null) {
-			 * result =
-			 * h2.getKicker().get(eCardNo.FirstCard.getCardNo()).getRank().
-			 * getRank() -
-			 * h1.getKicker().get(eCardNo.FirstCard.getCardNo()).getRank().
-			 * getRank(); } if (result != 0) { return result; } }
-			 * 
-			 * 
-			 * if (h2.getKicker().get(eCardNo.SecondCard.getCardNo()) != null) {
-			 * if (h1.getKicker().get(eCardNo.SecondCard.getCardNo()) != null) {
-			 * result =
-			 * h2.getKicker().get(eCardNo.SecondCard.getCardNo()).getRank().
-			 * getRank() -
-			 * h1.getKicker().get(eCardNo.SecondCard.getCardNo()).getRank().
-			 * getRank(); } if (result != 0) { return result; } } /* if
-			 * (h2.getKicker().get(eCardNo.ThirdCard.getCardNo()) != null) { if
-			 * (h1.getKicker().get(eCardNo.ThirdCard.getCardNo()) != null) {
-			 * result =
-			 * h2.getKicker().get(eCardNo.ThirdCard.getCardNo()).getRank().
-			 * getRank() -
-			 * h1.getKicker().get(eCardNo.ThirdCard.getCardNo()).getRank().
-			 * getRank(); } if (result != 0) { return result; } }
-			 * 
-			 * if (h2.getKicker().get(eCardNo.FourthCard.getCardNo()) != null) {
-			 * if (h1.getKicker().get(eCardNo.FourthCard.getCardNo()) != null) {
-			 * result =
-			 * h2.getKicker().get(eCardNo.FourthCard.getCardNo()).getRank().
-			 * getRank() -
-			 * h1.getKicker().get(eCardNo.FourthCard.getCardNo()).getRank().
-			 * getRank(); } if (result != 0) { return result; } }
-			 * 
-			 * }
-			 */
+
+			
+			if ((h2.Kickers == null) || (h1.Kickers == null))
+			{
+				return 0;
+			}
+			
+
+			try
+			{
+				if (h2.Kickers.size() >= eCardNo.FirstCard.getCardNo() +1 )
+				{
+					if (h1.Kickers.size() >= eCardNo.FirstCard.getCardNo() +1)
+					{
+						result = h2.getKicker().get(eCardNo.FirstCard.getCardNo()).getRank().getRank() - h1.getKicker().get(eCardNo.FirstCard.getCardNo()).getRank().getRank();
+					}
+					if (result != 0)
+					{
+						return result;
+					}
+				}				
+			}
+			catch (Exception e)
+			{				
+				System.out.println(e.getMessage());
+				throw new RuntimeException(e);
+			}			
+
+			
+			try
+			{
+				if (h2.Kickers.size() >= eCardNo.SecondCard.getCardNo() +1 )
+				{
+					if (h1.Kickers.size() >= eCardNo.SecondCard.getCardNo() +1)
+					{
+						result = h2.getKicker().get(eCardNo.SecondCard.getCardNo()).getRank().getRank() - h1.getKicker().get(eCardNo.SecondCard.getCardNo()).getRank().getRank();
+					}
+					if (result != 0)
+					{
+						return result;
+					}
+				}				
+			}
+			catch (Exception e)
+			{
+				System.out.println(e.getMessage());
+				throw new RuntimeException(e);				
+			}			
+			
+			try
+			{
+				if (h2.Kickers.size() >= eCardNo.ThirdCard.getCardNo() +1 )
+				{
+					if (h1.Kickers.size() >= eCardNo.ThirdCard.getCardNo() +1)
+					{
+						result = h2.getKicker().get(eCardNo.ThirdCard.getCardNo()).getRank().getRank() - h1.getKicker().get(eCardNo.ThirdCard.getCardNo()).getRank().getRank();
+					}
+					if (result != 0)
+					{
+						return result;
+					}
+				}				
+			}
+			catch (Exception e)
+			{
+				System.out.println(e.getMessage());
+				throw new RuntimeException(e);
+			}
+			
+			try
+			{
+				if (h2.Kickers.size() >= eCardNo.FourthCard.getCardNo() +1 )
+				{
+					if (h1.Kickers.size() >= eCardNo.FourthCard.getCardNo() +1)
+					{
+						result = h2.getKicker().get(eCardNo.FourthCard.getCardNo()).getRank().getRank() - h1.getKicker().get(eCardNo.FourthCard.getCardNo()).getRank().getRank();
+					}
+					if (result != 0)
+					{
+						return result;
+					}
+				}				
+			}
+			catch (Exception e)
+			{
+				System.out.println(e.getMessage());
+				throw new RuntimeException(e);				
+			}
+			
 			return 0;
 		}
 	};
+	
 }

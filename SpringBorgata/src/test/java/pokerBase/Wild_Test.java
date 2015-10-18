@@ -33,7 +33,7 @@ public class Wild_Test {
 		h.AddCardToHand(new Card(eSuit.SPADES, eRank.TEN, 0));
 		h.AddCardToHand(new Card(eSuit.HEARTS, eRank.TEN, 0));
 		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.NINE, 0));
-		h = Hand.EvalHands(h);
+		h = Hand.EvalHand(h);
 
 
 		System.out.println(h.getHandStrength());
@@ -59,7 +59,7 @@ public class Wild_Test {
 		h.AddCardToHand(new Card(eSuit.SPADES, eRank.TEN, 0));
 		h.AddCardToHand(new Card(eSuit.HEARTS, eRank.TEN, 0));
 		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.KING, 0));
-		h = Hand.EvalHands(h);
+		h = Hand.EvalHand(h);
 		;
 
 		assertTrue(h.getHandStrength() == eHandStrength.FourOfAKind.getHandStrength());
@@ -68,32 +68,5 @@ public class Wild_Test {
 		assertTrue(h.getKicker().size() == 1);
 	}
 
-	@Test
-	public void RoyalFlush() {
-
-		ArrayList<Card> Wilds = new ArrayList<Card>();
-
-		Wilds.add(new Card(eSuit.CLUBS, eRank.TWO, 0));
-		Wilds.add(new Card(eSuit.SPADES, eRank.TWO, 0));
-		Wilds.add(new Card(eSuit.HEARTS, eRank.TWO, 0));
-		Wilds.add(new Card(eSuit.DIAMONDS, eRank.TWO, 0));
-
-		int NbrOfJokers = 0;
-		
-		Deck d = new Deck(NbrOfJokers,Wilds);
-		Hand h = new Hand();
-		
-		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.THREE, true));
-		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.THREE, true));
-		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.THREE, true));
-		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.ACE, 0));
-
-		h.AddCardToHand(new Card(eSuit.CLUBS, eRank.ACE, 0));
-		h = Hand.EvalHands(h);
-
-		
-		assertTrue(h.getHandStrength() == eHandStrength.FiveOfAKind.getHandStrength());
-
-	}
 	
 }
